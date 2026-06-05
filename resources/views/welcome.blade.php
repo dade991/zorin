@@ -1,423 +1,515 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="forest">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="forest">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zorin — Rice Milling Management</title>
-    <meta name="description" content="Zorin is a complete rice milling management system. Track farmers, paddy, milling batches, inventory and sales.">
+    <title>Zorin Rice Milling — Premium Agricultural Management</title>
+    <meta name="description" content="Nigeria's most trusted rice milling management platform. Manage farmers, paddy purchases, milling batches, inventory and sales.">
+    <link rel="icon" href="/favicon.ico">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body>
+<body class="antialiased">
 
-{{-- LOADER --}}
+<!-- ═══════════ PAGE LOADER ═══════════ -->
 <div id="zorin-loader">
     <div class="loader-logo">
-        <svg class="loader-rice-svg" width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="45" cy="45" r="42" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
-            <g transform="rotate(0 45 45)"><ellipse cx="45" cy="10" rx="4.5" ry="10" fill="#D4AE3A" opacity="1"/></g>
-            <g transform="rotate(45 45 45)"><ellipse cx="45" cy="10" rx="4.5" ry="10" fill="#D4AE3A" opacity="0.8"/></g>
-            <g transform="rotate(90 45 45)"><ellipse cx="45" cy="10" rx="4.5" ry="10" fill="#D4AE3A" opacity="0.6"/></g>
-            <g transform="rotate(135 45 45)"><ellipse cx="45" cy="10" rx="4.5" ry="10" fill="#D4AE3A" opacity="0.45"/></g>
-            <g transform="rotate(180 45 45)"><ellipse cx="45" cy="10" rx="4.5" ry="10" fill="#D4AE3A" opacity="0.3"/></g>
-            <g transform="rotate(225 45 45)"><ellipse cx="45" cy="10" rx="4.5" ry="10" fill="#D4AE3A" opacity="0.2"/></g>
-            <g transform="rotate(270 45 45)"><ellipse cx="45" cy="10" rx="4.5" ry="10" fill="#D4AE3A" opacity="0.12"/></g>
-            <g transform="rotate(315 45 45)"><ellipse cx="45" cy="10" rx="4.5" ry="10" fill="#D4AE3A" opacity="0.07"/></g>
-            <circle cx="45" cy="45" r="12" fill="rgba(255,255,255,0.06)" stroke="rgba(212,174,58,0.35)" stroke-width="1.5"/>
-            <circle cx="45" cy="45" r="4" fill="#D4AE3A"/>
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="26" cy="12" rx="5" ry="9" fill="#D4AE3A" transform="rotate(-15 26 12)" opacity="0.9"/>
+            <ellipse cx="38" cy="22" rx="5" ry="9" fill="#D4AE3A" transform="rotate(10 38 22)" opacity="0.7"/>
+            <ellipse cx="14" cy="22" rx="5" ry="9" fill="#D4AE3A" transform="rotate(-40 14 22)" opacity="0.7"/>
+            <line x1="26" y1="22" x2="26" y2="46" stroke="#52B788" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="26" y1="36" x2="18" y2="30" stroke="#52B788" stroke-width="2" stroke-linecap="round"/>
+            <line x1="26" y1="32" x2="34" y2="26" stroke="#52B788" stroke-width="2" stroke-linecap="round"/>
         </svg>
-        <div class="loader-wordmark">ZORIN<span>.</span></div>
-        <div class="loader-subtitle">Rice Milling Management</div>
+        <div class="loader-wordmark">ZOR<span>IN</span></div>
+        <div class="loader-sub">Rice Milling Management</div>
         <div class="loader-bar"><div class="loader-bar-fill"></div></div>
         <div class="loader-dots"><span></span><span></span><span></span></div>
     </div>
 </div>
 
-{{-- Floating Rice Particles --}}
-<div id="particles-container" aria-hidden="true"></div>
+<!-- ═══════════ NAV ═══════════ -->
+<nav class="w-nav" id="w-nav">
+    <a href="{{ route('home') }}" class="w-nav-logo">ZOR<span>IN</span></a>
 
-{{-- NAV --}}
-<nav class="zorin-nav" id="zorin-nav">
-    <a href="/" class="nav-logo">ZORIN<span>.</span></a>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-menu" id="nav-menu">
+    <ul class="w-nav-menu" id="w-nav-menu">
         <li><a href="#about">About</a></li>
         <li><a href="#features">Features</a></li>
+        <li><a href="#process">Process</a></li>
         <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#services">How It Works</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="{{ route('register') }}">Register</a></li>
-        <li><a href="{{ route('login') }}" class="nav-cta">Sign In</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        @auth
+            <li><a href="{{ route('dashboard') }}" class="w-nav-cta">Dashboard</a></li>
+        @else
+            <li><a href="{{ route('login') }}">Sign In</a></li>
+            <li><a href="{{ route('register') }}" class="w-nav-cta">Get Started</a></li>
+        @endauth
     </ul>
+
+    <button class="w-nav-toggle" id="w-nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+    </button>
 </nav>
 
-{{-- HERO --}}
-<section class="hero" id="home">
-    <div class="hero-image-wrap">
-        <img src="https://images.unsplash.com/photo-1536054348319-58a5ea05f4de?w=1400&q=80" alt="Rice field" loading="eager">
-        <div class="hero-overlay"></div>
+<!-- ═══════════ HERO ═══════════ -->
+<section class="w-hero">
+    <div class="w-hero-image-wrap">
+        <img src="/images/operations/paddy-fields.jpg" alt="Paddy fields at dawn">
     </div>
-    <div class="hero-content">
-        <div class="hero-inner">
-            <div class="hero-badge">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <ellipse cx="7" cy="7" rx="3" ry="6" fill="currentColor" transform="rotate(-30 7 7)" opacity="0.8"/>
-                    <ellipse cx="7" cy="7" rx="3" ry="6" fill="currentColor" transform="rotate(30 7 7)"/>
-                </svg>
-                Rice Milling Management System
+    <div class="w-hero-overlay"></div>
+
+    <div class="w-hero-content">
+        <div class="w-hero-inner">
+            <div class="w-hero-badge">
+                <span class="w-badge-dot"></span>
+                ISO 9001:2015 Certified
             </div>
-            <h1>Smarter Milling,<br><em>Greater Harvest</em></h1>
-            <p class="hero-desc">Zorin gives your rice milling business full control — from paddy purchase to final sale, all in one powerful platform built for modern mills.</p>
-            <div class="hero-btns">
-                <a href="{{ route('register') }}" class="btn btn-primary">Get Started Free →</a>
-                <a href="{{ route('login') }}" class="btn btn-ghost">Sign In</a>
+            <h1>Premium <em>Rice</em>,<br>Milled with Precision</h1>
+            <p class="w-hero-desc">
+                Nigeria's most trusted rice milling platform — from paddy procurement
+                to polished grain, every stage managed with intelligence and care.
+            </p>
+            <div class="w-hero-btns">
+                @auth
+                    <a href="{{ route('dashboard') }}" class="btn btn-primary">
+                        <i class="fas fa-tachometer-alt"></i> Open Dashboard
+                    </a>
+                @else
+                    <a href="{{ route('register') }}" class="btn btn-primary">
+                        <i class="fas fa-seedling"></i> Get Started Free
+                    </a>
+                    <a href="{{ route('login') }}" class="btn btn-secondary">
+                        Sign In <i class="fas fa-arrow-right"></i>
+                    </a>
+                @endauth
             </div>
         </div>
     </div>
-    <div class="hero-photos">
-        <div class="hero-photo">
-            <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&q=80" alt="Farmer in field">
-        </div>
-        <div class="hero-photo">
-            <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&q=80" alt="Rice grains">
-        </div>
-        <div class="hero-photo">
-            <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=600&q=80" alt="Rice harvest">
-        </div>
+
+    <!-- Floating photo grid -->
+    <div class="w-hero-photos">
+        <div class="w-hero-photo"><img src="/images/operations/rice-harvest.jpg" alt="Rice harvest"></div>
+        <div class="w-hero-photo"><img src="/images/operations/quality-rice.jpg" alt="Quality rice"></div>
+        <div class="w-hero-photo"><img src="/images/operations/mill-operations.jpg" alt="Mill operations"></div>
     </div>
 </section>
 
-{{-- STATS --}}
-<div class="stats-band">
-    <div class="stat-item"><span class="stat-number" data-target="500">0</span><span class="stat-label">Farmers Managed</span></div>
-    <div class="stat-item"><span class="stat-number" data-target="12000">0</span><span class="stat-label">Tons Milled</span></div>
-    <div class="stat-item"><span class="stat-number" data-target="98">0</span><span class="stat-label">% Accuracy Rate</span></div>
-    <div class="stat-item"><span class="stat-number" data-target="6">0</span><span class="stat-label">Core Modules</span></div>
+<!-- ═══════════ TICKER ═══════════ -->
+<div class="w-ticker">
+    <div class="w-ticker-inner" id="w-ticker-inner">
+        <span class="w-ticker-item"><i class="fas fa-check-circle"></i> ISO 9001 Certified</span>
+        <span class="w-ticker-item"><i class="fas fa-wheat-awn"></i> Premium Grade Paddy</span>
+        <span class="w-ticker-item"><i class="fas fa-users"></i> 1,200+ Registered Farmers</span>
+        <span class="w-ticker-item"><i class="fas fa-industry"></i> 3 Milling Facilities</span>
+        <span class="w-ticker-item"><i class="fas fa-shield-halved"></i> Trusted Since 2010</span>
+        <span class="w-ticker-item"><i class="fas fa-chart-line"></i> 98% Client Retention</span>
+        <span class="w-ticker-item"><i class="fas fa-truck"></i> Nationwide Delivery</span>
+        <span class="w-ticker-item"><i class="fas fa-leaf"></i> Sustainable Practices</span>
+        <!-- Duplicate for seamless scroll -->
+        <span class="w-ticker-item"><i class="fas fa-check-circle"></i> ISO 9001 Certified</span>
+        <span class="w-ticker-item"><i class="fas fa-wheat-awn"></i> Premium Grade Paddy</span>
+        <span class="w-ticker-item"><i class="fas fa-users"></i> 1,200+ Registered Farmers</span>
+        <span class="w-ticker-item"><i class="fas fa-industry"></i> 3 Milling Facilities</span>
+        <span class="w-ticker-item"><i class="fas fa-shield-halved"></i> Trusted Since 2010</span>
+        <span class="w-ticker-item"><i class="fas fa-chart-line"></i> 98% Client Retention</span>
+        <span class="w-ticker-item"><i class="fas fa-truck"></i> Nationwide Delivery</span>
+        <span class="w-ticker-item"><i class="fas fa-leaf"></i> Sustainable Practices</span>
+    </div>
 </div>
 
-{{-- ABOUT --}}
-<section class="about-section" id="about">
-    <div class="about-images">
-        <div class="about-img">
-            <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=600&q=80" alt="Rice mill operations">
-            <div class="img-badge">🌾 Our Mill</div>
-        </div>
-        <div class="about-img">
-            <img src="https://images.unsplash.com/photo-1536054348319-58a5ea05f4de?w=400&q=80" alt="Rice harvest">
-        </div>
-        <div class="about-img">
-            <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&q=80" alt="Rice grains close up">
-            <div class="img-badge">⚙️ Processing</div>
-        </div>
+<!-- ═══════════ STATS BAND ═══════════ -->
+<div class="w-stats-band" id="stats-band">
+    <div class="w-stat-item">
+        <span class="w-stat-number" data-target="1200">0</span>
+        <span class="w-stat-label">Farmers Registered</span>
     </div>
-    <div class="about-text">
-        <span class="section-tag">About Zorin</span>
-        <h2 class="section-title">Built for the modern rice mill</h2>
-        <p class="section-body">Zorin is a complete management system designed specifically for rice milling businesses. Whether you handle 10 farmers or 10,000, Zorin keeps your operations smooth, your records clean, and your profits visible.</p>
-        <ul class="about-list">
-            <li>Track every bag of paddy from farm to finished rice</li>
-            <li>Manage farmer records, purchases, and payments</li>
-            <li>Monitor milling batches and output efficiency</li>
-            <li>Control inventory levels in real time</li>
-            <li>Generate sales invoices and revenue reports instantly</li>
-        </ul>
-        <div style="margin-top:2.5rem; display:flex; gap:1rem; flex-wrap:wrap;">
-            <a href="{{ route('register') }}" class="btn btn-primary">Start Managing Today</a>
-            <a href="#features" class="btn btn-outline">See All Features</a>
+    <div class="w-stat-item">
+        <span class="w-stat-number" data-target="48000" data-suffix=" MT">0</span>
+        <span class="w-stat-label">Paddy Processed Annually</span>
+    </div>
+    <div class="w-stat-item">
+        <span class="w-stat-number" data-target="99" data-suffix="%">0</span>
+        <span class="w-stat-label">Milling Efficiency</span>
+    </div>
+    <div class="w-stat-item">
+        <span class="w-stat-number" data-target="14">0</span>
+        <span class="w-stat-label">Years of Excellence</span>
+    </div>
+</div>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<section id="about" class="w-about">
+    <div class="w-about-inner">
+        <div class="w-about-images" data-animate="from-left">
+            <div class="w-about-img">
+                <img src="/images/operations/farmer-field.jpg" alt="Farmer in field">
+                <div class="w-img-badge">📍 Kano State, NG</div>
+            </div>
+            <div class="w-about-img">
+                <img src="/images/operations/milling-process.jpg" alt="Milling process">
+            </div>
+            <div class="w-about-img">
+                <img src="/images/operations/rice-grains.jpg" alt="Quality rice grains">
+                <div class="w-img-badge">✓ Grade A Certified</div>
+            </div>
+        </div>
+
+        <div class="w-about-text" data-animate="from-right">
+            <span class="w-section-tag">Who We Are</span>
+            <h2 class="w-section-title">Rooted in the Fields,<br>Driven by Technology</h2>
+            <p class="w-section-body">
+                Zorin Rice Milling has served Northern Nigeria's farming communities for over a decade.
+                We combine deep agricultural knowledge with modern management software to deliver
+                exceptional grain quality and transparent operations.
+            </p>
+            <ul class="w-about-list">
+                <li>State-of-the-art moisture testing and grade classification</li>
+                <li>Direct farmer partnerships ensuring fair, transparent pricing</li>
+                <li>Real-time inventory tracking from paddy intake to packaged rice</li>
+                <li>Full audit trail on every batch for regulatory compliance</li>
+                <li>ISO 9001:2015 certified processes across all facilities</li>
+            </ul>
         </div>
     </div>
 </section>
 
-{{-- FEATURES --}}
-<section class="features-section" id="features">
-    <div class="features-header">
-        <span class="section-tag" style="justify-content:center;">What We Offer</span>
-        <h2 class="section-title">Everything your mill needs</h2>
-        <p class="section-body">Six powerful modules working together to run your entire rice milling operation from one central platform.</p>
+<!-- ═══════════ FEATURES ═══════════ -->
+<section id="features" class="w-features">
+    <div class="w-features-header">
+        <span class="w-section-tag">Platform Features</span>
+        <h2 class="w-section-title">Everything You Need to Run Your Mill</h2>
+        <p class="w-section-body">One integrated platform for farmers, purchases, milling, inventory, and sales.</p>
     </div>
-    <div class="features-grid">
-        <div class="feature-card">
-            <div class="feature-icon-wrap">👨‍🌾</div>
-            <div class="feature-title">Farmer Management</div>
-            <p class="feature-body">Store and manage all farmer records, contact details, villages, and complete purchase history in one organized place.</p>
+    <div class="w-features-grid stagger" id="features-grid">
+        <div class="w-feature-card" data-animate="up">
+            <div class="w-feature-icon"><i class="fas fa-user-tie" style="color:var(--primary)"></i></div>
+            <div class="w-feature-title">Farmer Management</div>
+            <p class="w-feature-body">Maintain detailed farmer profiles, track purchase history, and manage relationships with NIN/BVN integration.</p>
         </div>
-        <div class="feature-card">
-            <div class="feature-icon-wrap">🛒</div>
-            <div class="feature-title">Paddy Purchasing</div>
-            <p class="feature-body">Record every purchase with weight, price per kg, and total cost — automatically linked to the farmer's profile.</p>
+        <div class="w-feature-card" data-animate="up">
+            <div class="w-feature-icon"><i class="fas fa-shopping-basket" style="color:var(--primary)"></i></div>
+            <div class="w-feature-title">Paddy Purchases</div>
+            <p class="w-feature-body">Record purchases with automatic weight, moisture and quality calculations. Real-time farmer credit ledger.</p>
         </div>
-        <div class="feature-card">
-            <div class="feature-icon-wrap">⚙️</div>
-            <div class="feature-title">Milling Process</div>
-            <p class="feature-body">Log input paddy weight, milled rice output, and waste per batch. Efficiency calculated automatically for you.</p>
+        <div class="w-feature-card" data-animate="up">
+            <div class="w-feature-icon"><i class="fas fa-industry" style="color:var(--primary)"></i></div>
+            <div class="w-feature-title">Milling Batches</div>
+            <p class="w-feature-body">Log every batch with input weight, output yield, husk and bran by-products. Track efficiency per machine.</p>
         </div>
-        <div class="feature-card">
-            <div class="feature-icon-wrap">📦</div>
-            <div class="feature-title">Inventory Control</div>
-            <p class="feature-body">Keep a live view of your rice stock. Get notified when quantities fall below your set thresholds.</p>
+        <div class="w-feature-card" data-animate="up">
+            <div class="w-feature-icon"><i class="fas fa-boxes-stacked" style="color:var(--primary)"></i></div>
+            <div class="w-feature-title">Inventory Control</div>
+            <p class="w-feature-body">Monitor stock levels across all varieties and grades. Smart low-stock alerts and expiry tracking.</p>
         </div>
-        <div class="feature-card">
-            <div class="feature-icon-wrap">🤝</div>
-            <div class="feature-title">Customer Sales</div>
-            <p class="feature-body">Manage customer orders, generate invoices, and track all sales revenue day by day — automatically.</p>
+        <div class="w-feature-card" data-animate="up">
+            <div class="w-feature-icon"><i class="fas fa-receipt" style="color:var(--primary)"></i></div>
+            <div class="w-feature-title">Sales & Invoicing</div>
+            <p class="w-feature-body">Create branded invoices, track payments, manage bulk orders and export to PDF in one click.</p>
         </div>
-        <div class="feature-card">
-            <div class="feature-icon-wrap">📈</div>
-            <div class="feature-title">Reports & Analytics</div>
-            <p class="feature-body">Charts showing income, expenses, milling efficiency, and profit margins across any custom date range.</p>
-        </div>
-    </div>
-</section>
-
-{{-- GALLERY --}}
-<section class="gallery-section" id="gallery">
-    <div class="gallery-header">
-        <span class="section-tag" style="justify-content:center;">Our Operations</span>
-        <h2 class="section-title">From field to finished rice</h2>
-        <p class="section-body">A look at the Zorin rice milling process — every step captured, tracked, and managed.</p>
-    </div>
-    <div class="gallery-grid">
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1536054348319-58a5ea05f4de?w=800&q=80" alt="Rice fields">
-            <div class="gallery-overlay"><span class="gallery-label">Paddy Fields</span></div>
-        </div>
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=500&q=80" alt="Farmer">
-            <div class="gallery-overlay"><span class="gallery-label">Farmer Collection</span></div>
-        </div>
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80" alt="Harvest">
-            <div class="gallery-overlay"><span class="gallery-label">Harvest Season</span></div>
-        </div>
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=500&q=80" alt="Milling">
-            <div class="gallery-overlay"><span class="gallery-label">Milling Process</span></div>
-        </div>
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&q=80" alt="Rice grains">
-            <div class="gallery-overlay"><span class="gallery-label">Quality Rice</span></div>
+        <div class="w-feature-card" data-animate="up">
+            <div class="w-feature-icon"><i class="fas fa-chart-pie" style="color:var(--primary)"></i></div>
+            <div class="w-feature-title">Reports & Analytics</div>
+            <p class="w-feature-body">Profit & loss, efficiency ratios, seasonal trends — exportable reports for data-driven decisions.</p>
         </div>
     </div>
 </section>
 
-{{-- HOW IT WORKS --}}
-<section class="process-section" id="services">
-    <div>
-        <span class="section-tag" style="justify-content:center;">How It Works</span>
-        <h2 class="section-title" style="text-align:center;">Simple process, powerful results</h2>
+<!-- ═══════════ GALLERY ═══════════ -->
+<section id="gallery" class="w-gallery">
+    <div class="w-gallery-header">
+        <span class="w-section-tag">Operations</span>
+        <h2 class="w-section-title">From Field to Mill</h2>
+        <p class="w-section-body">A glimpse into our premium paddy-to-rice operations.</p>
     </div>
-    <div class="process-grid">
-        <div class="process-step">
-            <div class="step-number">01</div>
-            <div class="step-title">Farmer Arrives</div>
-            <p class="step-desc">Farmer delivers paddy. Their record is looked up and arrival is logged instantly in the system.</p>
+    <div class="w-gallery-grid">
+        <div class="w-gallery-item">
+            <img src="/images/operations/farmer-collection.jpg" alt="Farmer collection point">
+            <div class="w-gallery-overlay"><span class="w-gallery-label">Paddy Collection</span></div>
         </div>
-        <div class="process-step">
-            <div class="step-number">02</div>
-            <div class="step-title">Purchase Recorded</div>
-            <p class="step-desc">Weight and price per kg entered. Total is calculated and saved to the farmer's account automatically.</p>
+        <div class="w-gallery-item">
+            <img src="/images/operations/harvest-season.jpg" alt="Harvest season">
+            <div class="w-gallery-overlay"><span class="w-gallery-label">Harvest Season</span></div>
         </div>
-        <div class="process-step">
-            <div class="step-number">03</div>
-            <div class="step-title">Milling Starts</div>
-            <p class="step-desc">Paddy goes to the mill. Input and output weights are logged per batch for efficiency tracking.</p>
+        <div class="w-gallery-item">
+            <img src="/images/operations/milling-process.jpg" alt="Milling process">
+            <div class="w-gallery-overlay"><span class="w-gallery-label">Milling Operations</span></div>
         </div>
-        <div class="process-step">
-            <div class="step-number">04</div>
-            <div class="step-title">Stock Updated</div>
-            <p class="step-desc">Milled rice is added to your live inventory automatically after each batch completes.</p>
+        <div class="w-gallery-item">
+            <img src="/images/operations/quality-rice.jpg" alt="Quality rice">
+            <div class="w-gallery-overlay"><span class="w-gallery-label">Quality Rice</span></div>
         </div>
-        <div class="process-step">
-            <div class="step-number">05</div>
-            <div class="step-title">Sale Made</div>
-            <p class="step-desc">Customer buys rice. Invoice is generated and stock is deducted from inventory instantly.</p>
-        </div>
-        <div class="process-step">
-            <div class="step-number">06</div>
-            <div class="step-title">Reports Ready</div>
-            <p class="step-desc">Your dashboard shows profit, efficiency, and revenue at a glance — always up to date.</p>
+        <div class="w-gallery-item">
+            <img src="/images/operations/rice-grains-closeup.jpg" alt="Rice grains closeup">
+            <div class="w-gallery-overlay"><span class="w-gallery-label">Grade A Grains</span></div>
         </div>
     </div>
 </section>
 
-{{-- CONTACT --}}
-<section class="contact-section" id="contact">
-    <div class="contact-inner">
-        <div>
-            <span class="section-tag">Get In Touch</span>
-            <h2 class="section-title">Start your free<br>trial today</h2>
-            <p class="section-body" style="margin-bottom:2.5rem;">Have questions about Zorin? Send us a message and we'll get back to you as quickly as possible.</p>
-            <div style="display:flex; flex-direction:column; gap:1rem;">
-                <div style="display:flex; align-items:center; gap:0.85rem; color:var(--text-muted); font-size:0.9rem;">
-                    <div style="width:38px;height:38px;background:var(--primary-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">📍</div>
-                    Nigeria
-                </div>
-                <div style="display:flex; align-items:center; gap:0.85rem; color:var(--text-muted); font-size:0.9rem;">
-                    <div style="width:38px;height:38px;background:var(--primary-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">✉️</div>
-                    hello@zorin.app
-                </div>
-                <div style="display:flex; align-items:center; gap:0.85rem; color:var(--text-muted); font-size:0.9rem;">
-                    <div style="width:38px;height:38px;background:var(--primary-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">📞</div>
-                    +234 800 000 0000
+<!-- ═══════════ PROCESS ═══════════ -->
+<section id="process" class="w-process">
+    <div class="w-process-header">
+        <span class="w-section-tag">How It Works</span>
+        <h2 class="w-section-title">The Zorin Milling Journey</h2>
+    </div>
+    <div class="w-process-grid stagger" id="process-grid">
+        <div class="w-process-step" data-animate="up">
+            <div class="w-step-number">01</div>
+            <div class="w-step-title">Farmer Registration</div>
+            <p class="w-step-desc">Onboard farmers with full profile, location and ID verification.</p>
+        </div>
+        <div class="w-process-step" data-animate="up">
+            <div class="w-step-number">02</div>
+            <div class="w-step-title">Paddy Purchase</div>
+            <p class="w-step-desc">Record purchases with weight, moisture grade and automatic pricing.</p>
+        </div>
+        <div class="w-process-step" data-animate="up">
+            <div class="w-step-number">03</div>
+            <div class="w-step-title">Milling Batch</div>
+            <p class="w-step-desc">Log each batch, track yield ratios and by-product weights.</p>
+        </div>
+        <div class="w-process-step" data-animate="up">
+            <div class="w-step-number">04</div>
+            <div class="w-step-title">Quality Check</div>
+            <p class="w-step-desc">Grade milled rice, assign SKU and move to inventory.</p>
+        </div>
+        <div class="w-process-step" data-animate="up">
+            <div class="w-step-number">05</div>
+            <div class="w-step-title">Sale & Dispatch</div>
+            <p class="w-step-desc">Invoice customers, track dispatch and confirm payment.</p>
+        </div>
+        <div class="w-process-step" data-animate="up">
+            <div class="w-step-number">06</div>
+            <div class="w-step-title">Reports</div>
+            <p class="w-step-desc">Analyse profitability, efficiency and seasonal performance.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ TESTIMONIALS ═══════════ -->
+<section id="testimonials" class="w-testimonials">
+    <div class="w-testimonials-header">
+        <span class="w-section-tag">Testimonials</span>
+        <h2 class="w-section-title">Trusted by Millers Across the North</h2>
+    </div>
+    <div class="w-testimonials-grid stagger" id="testimonials-grid">
+        <div class="w-testimonial-card" data-animate="up">
+            <p class="w-testimonial-quote">Zorin transformed how we manage our paddy intake. We used to lose track of farmer payments — now everything is automatic and accurate.</p>
+            <div class="w-testimonial-author">
+                <div class="w-testimonial-avatar">AK</div>
+                <div>
+                    <div class="w-testimonial-name">Alhaji Kabir Musa</div>
+                    <div class="w-testimonial-role">Kano Rice Mill, Kano State</div>
                 </div>
             </div>
         </div>
-        <div class="contact-form-wrap">
-            <div class="form-title">Send a Message</div>
-            <div class="form-subtitle">We typically reply within 24 hours</div>
-            <form onsubmit="return false;">
-                <div class="form-group form-row">
-                    <div>
-                        <label class="form-label">First Name</label>
-                        <input type="text" class="form-input" placeholder="John">
-                    </div>
-                    <div>
-                        <label class="form-label">Last Name</label>
-                        <input type="text" class="form-input" placeholder="Doe">
-                    </div>
+        <div class="w-testimonial-card" data-animate="up">
+            <p class="w-testimonial-quote">The milling batch tracking alone saved us thousands of naira monthly. We can now see exactly where yield losses happen and fix them.</p>
+            <div class="w-testimonial-author">
+                <div class="w-testimonial-avatar">IA</div>
+                <div>
+                    <div class="w-testimonial-name">Ibrahim Abubakar</div>
+                    <div class="w-testimonial-role">Al-Amin Agro, Kaduna</div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" class="form-input" placeholder="john@yourmill.com">
+            </div>
+        </div>
+        <div class="w-testimonial-card" data-animate="up">
+            <p class="w-testimonial-quote">I tried two other systems before Zorin. Nothing comes close — the reports are clear, the interface is fast, and the support is excellent.</p>
+            <div class="w-testimonial-author">
+                <div class="w-testimonial-avatar">FM</div>
+                <div>
+                    <div class="w-testimonial-name">Fatima Mohammed</div>
+                    <div class="w-testimonial-role">Sunrise Mills, Sokoto</div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Mill / Business Name</label>
-                    <input type="text" class="form-input" placeholder="Your Rice Mill">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Message</label>
-                    <textarea class="form-input form-textarea" placeholder="Tell us about your operation..."></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:0.5rem;">
-                    Send Message →
-                </button>
-            </form>
+            </div>
         </div>
     </div>
 </section>
 
-{{-- FOOTER --}}
-<footer class="zorin-footer">
-    <div class="footer-top">
-        <div class="footer-brand">
-            <div class="footer-logo">ZORIN<span>.</span></div>
-            <p>A complete rice milling management system built for modern rice mills across Nigeria and beyond. Track, manage, and grow with confidence.</p>
+<!-- ═══════════ FAQ ═══════════ -->
+<section id="faq" class="w-faq">
+    <div class="w-faq-header">
+        <span class="w-section-tag">FAQ</span>
+        <h2 class="w-section-title">Common Questions</h2>
+    </div>
+    <div class="w-faq-list" id="faq-list">
+        <div class="w-faq-item">
+            <button class="w-faq-trigger">
+                How many farmers can I register?
+                <span class="w-faq-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="w-faq-body"><p>There is no limit on farmer registrations. The platform is designed to handle thousands of farmer records with full purchase history and documentation.</p></div>
         </div>
-        <div class="footer-col">
-            <h4>Platform</h4>
-            <ul>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#services">How It Works</a></li>
-                <li><a href="{{ route('login') }}">Sign In</a></li>
-                <li><a href="{{ route('register') }}">Register Free</a></li>
-            </ul>
+        <div class="w-faq-item">
+            <button class="w-faq-trigger">
+                Can I export reports to PDF or Excel?
+                <span class="w-faq-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="w-faq-body"><p>Yes. All reports — purchases, sales, milling efficiency, profit & loss — can be exported as PDF or Excel. Invoices are print-ready with your branding.</p></div>
         </div>
-        <div class="footer-col">
-            <h4>Modules</h4>
-            <ul>
-                <li><a href="#">Farmer Management</a></li>
-                <li><a href="#">Paddy Purchasing</a></li>
-                <li><a href="#">Milling Batches</a></li>
-                <li><a href="#">Inventory & Sales</a></li>
-            </ul>
+        <div class="w-faq-item">
+            <button class="w-faq-trigger">
+                Does it work on mobile devices?
+                <span class="w-faq-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="w-faq-body"><p>Zorin is fully responsive and works on smartphones, tablets and desktops. Field staff can record paddy purchases on mobile at the collection point.</p></div>
+        </div>
+        <div class="w-faq-item">
+            <button class="w-faq-trigger">
+                Is the data backed up automatically?
+                <span class="w-faq-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="w-faq-body"><p>All data is backed up daily to secure cloud storage. We maintain 30 days of rolling backups so your data is always safe and recoverable.</p></div>
+        </div>
+        <div class="w-faq-item">
+            <button class="w-faq-trigger">
+                How long does setup take?
+                <span class="w-faq-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="w-faq-body"><p>Most mills are fully set up within 2 hours. We provide onboarding support to help you import existing farmer lists and configure your product catalogue.</p></div>
         </div>
     </div>
-    <div class="footer-bottom">
-        <span>© {{ date('Y') }} Zorin Rice Milling System. All rights reserved.</span>
-        <span>Built with Laravel & Vite 🌾</span>
+</section>
+
+<!-- ═══════════ CTA ═══════════ -->
+<section class="w-cta">
+    <div class="w-cta-inner">
+        <span class="w-section-tag" style="color:rgba(255,255,255,0.5)">Get Started Today</span>
+        <h2>Ready to Modernise<br>Your Mill?</h2>
+        <p>Join over 40 rice mills across Northern Nigeria who trust Zorin to run their operations efficiently.</p>
+        <div class="w-cta-btns">
+            @auth
+                <a href="{{ route('dashboard') }}" class="btn btn-white">
+                    <i class="fas fa-tachometer-alt"></i> Open Dashboard
+                </a>
+            @else
+                <a href="{{ route('register') }}" class="btn btn-white">
+                    <i class="fas fa-seedling"></i> Create Free Account
+                </a>
+                <a href="{{ route('login') }}" class="btn btn-white-outline">
+                    Sign In <i class="fas fa-arrow-right"></i>
+                </a>
+            @endauth
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="w-footer">
+    <div style="max-width:1280px;margin:0 auto;">
+        <div class="w-footer-top">
+            <div class="w-footer-brand">
+                <div class="w-footer-logo">ZOR<span>IN</span></div>
+                <p>Premium rice milling management for Nigerian agro-processors. From paddy to polished grain — managed with precision.</p>
+            </div>
+            <div class="w-footer-col">
+                <h4>Platform</h4>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#process">How It Works</a></li>
+                    <li><a href="{{ route('register') }}">Get Started</a></li>
+                    <li><a href="{{ route('login') }}">Sign In</a></li>
+                </ul>
+            </div>
+            <div class="w-footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="w-footer-bottom">
+            <span>© {{ date('Y') }} Zorin Rice Milling. All rights reserved.</span>
+            <span>Made with <i class="fas fa-heart" style="color:var(--gold-light)"></i> in Kano, Nigeria</span>
+        </div>
     </div>
 </footer>
 
 <script>
-// ── LOADER ──
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        document.getElementById('zorin-loader').classList.add('hidden');
-        document.body.style.overflow = '';
-    }, 2200);
-});
-document.body.style.overflow = 'hidden';
+document.addEventListener('DOMContentLoaded', () => {
 
-// ── RICE PARTICLES ──
-const container = document.getElementById('particles-container');
-container.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;';
-function spawnParticle() {
-    const el = document.createElementNS('http://www.w3.org/2000/svg','svg');
-    const size = Math.random() * 14 + 6;
-    el.setAttribute('width', size);
-    el.setAttribute('height', size * 2.2);
-    el.setAttribute('viewBox', '0 0 10 22');
-    el.innerHTML = '<ellipse cx="5" cy="11" rx="4" ry="9" fill="var(--accent)" opacity="0.12"/>';
-    el.style.cssText = `position:absolute;left:${Math.random()*100}vw;bottom:-50px;animation:floatParticle ${Math.random()*15+12}s linear ${Math.random()*5}s infinite;`;
-    container.appendChild(el);
-}
-const style = document.createElement('style');
-style.textContent = `@keyframes floatParticle {
-    0%   { transform: translateY(0) rotate(${Math.random()*360}deg); opacity:0; }
-    8%   { opacity:0.18; }
-    92%  { opacity:0.12; }
-    100% { transform: translateY(-110vh) rotate(${Math.random()*720+360}deg); opacity:0; }
-}`;
-document.head.appendChild(style);
-for (let i = 0; i < 18; i++) spawnParticle();
+    // ── Loader
+    const loader = document.getElementById('zorin-loader');
+    setTimeout(() => loader && loader.classList.add('hidden'), 1800);
 
-// ── NAV ──
-const nav = document.getElementById('zorin-nav');
-window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
-const toggle = document.getElementById('nav-toggle');
-const menu   = document.getElementById('nav-menu');
-toggle.addEventListener('click', () => {
-    toggle.classList.toggle('open');
-    menu.classList.toggle('open');
-});
-menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    toggle.classList.remove('open');
-    menu.classList.remove('open');
-}));
+    // ── Nav scroll state
+    const nav = document.getElementById('w-nav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
 
-// ── SCROLL ANIMATIONS ──
-const obs = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-            setTimeout(() => entry.target.classList.add('visible'), (entry.target.dataset.delay || 0));
-        }
+    // ── Mobile nav toggle
+    const toggle = document.getElementById('w-nav-toggle');
+    const menu   = document.getElementById('w-nav-menu');
+    toggle?.addEventListener('click', () => {
+        toggle.classList.toggle('open');
+        menu.classList.toggle('open');
     });
-}, { threshold: 0.1 });
-document.querySelectorAll('.stat-item, .feature-card, .process-step, .about-images, .about-text').forEach((el, i) => {
-    el.dataset.delay = (i % 4) * 100;
-    obs.observe(el);
-});
+    menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        toggle.classList.remove('open');
+        menu.classList.remove('open');
+    }));
 
-// ── COUNTER ANIMATION ──
-const statsObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.querySelectorAll('.stat-number').forEach(el => {
-                const target = parseInt(el.dataset.target);
-                const suffix = target === 98 ? '%' : '+';
-                let start = 0;
-                const duration = 2000;
-                const startTime = performance.now();
-                const tick = (now) => {
-                    const elapsed = now - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    el.textContent = Math.round(eased * target).toLocaleString() + suffix;
-                    if (progress < 1) requestAnimationFrame(tick);
-                };
-                requestAnimationFrame(tick);
+    // ── Intersection Observer for scroll animations
+    const observe = (selector, cls = 'visible') => {
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add(cls), i * 100);
+                    io.unobserve(e.target);
+                }
             });
-            statsObs.disconnect();
-        }
-    });
-}, { threshold: 0.4 });
-const band = document.querySelector('.stats-band');
-if (band) statsObs.observe(band);
+        }, { threshold: 0.12 });
+        document.querySelectorAll(selector).forEach(el => io.observe(el));
+    };
+    observe('[data-animate]', 'visible');
+    observe('.w-about-images', 'visible');
+    observe('.w-about-text', 'visible');
+    observe('.w-stat-item', 'visible');
+    observe('.w-feature-card', 'visible');
+    observe('.w-gallery-item', 'visible');
+    observe('.w-process-step', 'visible');
+    observe('.w-testimonial-card', 'visible');
 
-// ── SAVE THEME ──
-const savedTheme = localStorage.getItem('zorin-theme') || 'forest';
-document.documentElement.setAttribute('data-theme', savedTheme);
+    // ── Animated counters
+    const animateCounter = (el) => {
+        const target = parseInt(el.getAttribute('data-target'));
+        const suffix = el.getAttribute('data-suffix') || '';
+        const dur = 1800;
+        const step = target / (dur / 16);
+        let current = 0;
+        const timer = setInterval(() => {
+            current = Math.min(current + step, target);
+            el.textContent = Math.floor(current).toLocaleString() + suffix;
+            if (current >= target) clearInterval(timer);
+        }, 16);
+    };
+    const statsIO = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.querySelectorAll('.w-stat-number[data-target]').forEach(animateCounter);
+                statsIO.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.3 });
+    const statsBand = document.getElementById('stats-band');
+    if (statsBand) statsIO.observe(statsBand);
+
+    // ── FAQ accordion
+    document.querySelectorAll('.w-faq-trigger').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.w-faq-item');
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('.w-faq-item').forEach(i => i.classList.remove('open'));
+            if (!isOpen) item.classList.add('open');
+        });
+    });
+
+});
 </script>
 </body>
 </html>

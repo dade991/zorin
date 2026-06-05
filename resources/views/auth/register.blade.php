@@ -1,93 +1,100 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="forest">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="forest">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account — Zorin</title>
+    <title>Create Account — Zorin Rice Milling</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body>
-<script>
-    const t = localStorage.getItem('zorin-theme') || 'forest';
-    document.documentElement.setAttribute('data-theme', t);
-</script>
+<body class="antialiased">
 
 <div class="auth-page">
-    {{-- LEFT VISUAL --}}
+
+    <!-- ── Visual Side ── -->
     <div class="auth-visual">
-        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=900&q=80" alt="Rice harvest">
+        <img src="/images/operations/rice-harvest.jpg" alt="Rice harvest">
         <div class="auth-visual-content">
-            <a href="/" class="auth-logo">ZORIN<span>.</span></a>
+            <div class="auth-logo">ZOR<span>IN</span></div>
             <div>
-                <h2 class="auth-tagline">Join the<br>smarter<br><em>harvest</em></h2>
-                <p class="auth-tagline-sub">Create your free Zorin account and start managing your rice milling operation like a pro — in minutes.</p>
+                <h2 class="auth-tagline">Join the Future of <em>Rice Milling</em></h2>
+                <p class="auth-tagline-sub">
+                    Thousands of Nigerian rice millers trust Zorin to manage their
+                    operations efficiently, transparently and profitably.
+                </p>
             </div>
         </div>
     </div>
 
-    {{-- RIGHT FORM --}}
+    <!-- ── Form Side ── -->
     <div class="auth-form-side">
         <div class="auth-form-wrap">
-            <a href="/" class="auth-back">← Back to Home</a>
 
-            <div class="auth-form-title">Create Account</div>
-            <p class="auth-form-sub">Start your free Zorin account today — no credit card required.</p>
+            <a href="{{ route('home') }}" class="auth-back">
+                <i class="fas fa-arrow-left"></i> Back to home
+            </a>
 
-            <form method="POST" action="{{ route('register') }}">
+            <h1 class="auth-form-title">Create account</h1>
+            <p class="auth-form-sub">Set up your Zorin Rice Milling account — it's free.</p>
+
+            <form action="{{ route('register') }}" method="POST" style="display:flex;flex-direction:column;gap:1rem;">
                 @csrf
 
-                {{-- Name --}}
-                <div class="auth-input-group">
-                    <label class="auth-label" for="name">Full Name</label>
-                    <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name"
-                        class="auth-input @error('name') is-invalid @enderror"
-                        placeholder="Your full name">
+                <div>
+                    <label for="name" class="auth-label">Full Name</label>
+                    <input id="name" name="name" type="text" required autocomplete="name"
+                           class="auth-input {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                           value="{{ old('name') }}"
+                           placeholder="Alhaji Musa Ibrahim">
                     @error('name')
-                        <div class="auth-error">{{ $message }}</div>
+                        <span class="auth-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</span>
                     @enderror
                 </div>
 
-                {{-- Email --}}
-                <div class="auth-input-group">
-                    <label class="auth-label" for="email">Email Address</label>
-                    <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="username"
-                        class="auth-input @error('email') is-invalid @enderror"
-                        placeholder="you@yourmill.com">
+                <div>
+                    <label for="email" class="auth-label">Email Address</label>
+                    <input id="email" name="email" type="email" required autocomplete="email"
+                           class="auth-input {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                           value="{{ old('email') }}"
+                           placeholder="you@yourmill.com">
                     @error('email')
-                        <div class="auth-error">{{ $message }}</div>
+                        <span class="auth-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</span>
                     @enderror
                 </div>
 
-                {{-- Password --}}
-                <div class="auth-input-group">
-                    <label class="auth-label" for="password">Password</label>
-                    <input id="password" type="password" name="password" required autocomplete="new-password"
-                        class="auth-input @error('password') is-invalid @enderror"
-                        placeholder="At least 8 characters">
-                    @error('password')
-                        <div class="auth-error">{{ $message }}</div>
-                    @enderror
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                    <div>
+                        <label for="password" class="auth-label">Password</label>
+                        <input id="password" name="password" type="password" required autocomplete="new-password"
+                               class="auth-input {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                               placeholder="Min. 8 characters">
+                        @error('password')
+                            <span class="auth-error">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="password_confirmation" class="auth-label">Confirm</label>
+                        <input id="password_confirmation" name="password_confirmation" type="password" required autocomplete="new-password"
+                               class="auth-input"
+                               placeholder="Repeat password">
+                    </div>
                 </div>
 
-                {{-- Confirm Password --}}
-                <div class="auth-input-group">
-                    <label class="auth-label" for="password_confirmation">Confirm Password</label>
-                    <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password"
-                        class="auth-input"
-                        placeholder="Repeat your password">
-                </div>
-
-                <button type="submit" class="auth-submit" style="margin-top:1rem;">CREATE ACCOUNT →</button>
+                <button type="submit" class="auth-submit" style="margin-top:0.25rem;">
+                    Create Account <i class="fas fa-seedling" style="margin-left:0.5rem;"></i>
+                </button>
             </form>
 
             <div class="auth-divider">or</div>
 
-            <div class="auth-switch">
+            <p class="auth-switch">
                 Already have an account?
-                <a href="{{ route('login') }}">Sign in →</a>
-            </div>
+                <a href="{{ route('login') }}">Sign in</a>
+            </p>
+
         </div>
     </div>
 </div>
+
 </body>
 </html>

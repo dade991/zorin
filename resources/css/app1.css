@@ -1,0 +1,600 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────────────────────────────────────────────
+   Zorin Rice Milling — Modern App Styles
+   Tailwind CSS v3 Compatible
+   Theme: Rice Processing Earth Tones
+   ─────────────────────────────────────────────── */
+
+:root {
+  /* Rice Processing Color Palette */
+  --color-rice-50: #faf9f6;
+  --color-rice-100: #f5f2ee;
+  --color-rice-200: #ebe5d9;
+  --color-rice-300: #d8cbbf;
+  --color-rice-400: #c4b2a0;
+  --color-rice-500: #af9982;
+  --color-rice-600: #937b66;
+  --color-rice-700: #7a6452;
+  --color-rice-800: #644f40;
+  --color-rice-900: #4e3b2f;
+  --color-rice-950: #2a1f18;
+
+  /* Accent Colors */
+  --color-husk: #8b7355;
+  --color-milled: #f5deb3;
+  --color-bran: #8b4513;
+  --color-germ: #dda15e;
+
+  /* Semantic Colors */
+  --color-success: #5a8d4b;
+  --color-warning: #c8963b;
+  --color-danger: #c44536;
+  --color-info: #4a90e2;
+  /* Info shades */
+  --color-info-50: #eff6ff;
+  --color-info-100: #dbeafe;
+  --color-info-200: #bfdbfe;
+  --color-info-300: #93c5fd;
+  --color-info-400: #60a5fa;
+  --color-info-500: #4a90e2;
+  --color-info-600: #3b82f6;
+  --color-info-700: #2563eb;
+  --color-info-800: #1d4ed8;
+  --color-info-900: #1e40af;
+  --color-info-950: #1e3a8a;
+
+  /* Success shades */
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-200: #bbf7d0;
+  --color-success-300: #86efac;
+  --color-success-400: #4ade80;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+  --color-success-700: #15803d;
+  --color-success-800: #166534;
+  --color-success-900: #14532d;
+  --color-success-950: #052e16;
+
+  /* Warning shades */
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+  --color-warning-950: #451a03;
+
+  /* Danger shades */
+  --color-danger-50: #fef2f2;
+  --color-danger-100: #fee2e2;
+  --color-danger-200: #fecaca;
+  --color-danger-300: #fca5a5;
+  --color-danger-400: #f87171;
+  --color-danger-500: #ef4444;
+  --color-danger-600: #dc2626;
+  --color-danger-700: #b91c1c;
+  --color-danger-800: #991b1b;
+  --color-danger-900: #7f1d1d;
+  --color-danger-950: #450a0a;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --sidebar-width: 16rem;
+}
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  background-color: var(--color-rice-50);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-rice-300);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-rice-400);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-rice-300) transparent;
+}
+
+/* Keyframes */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(196, 69, 54, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(196, 69, 54, 0); }
+  100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(196, 69, 54, 0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes rice-sway {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(2deg); }
+  75% { transform: rotate(-2deg); }
+}
+
+/* Components */
+.nav-link {
+  @apply flex items-center py-3 px-4 text-sm font-medium rounded-lg transition-all duration-200 relative overflow-hidden text-rice-600 no-underline;
+}
+.nav-link::before {
+  content: "";
+  @apply absolute left-0 top-1/2 w-[3px] h-[60%] bg-rice-600 rounded-r;
+  transform: translateY(-50%) scaleY(0);
+  transition: transform 0.3s var(--ease-out-expo);
+}
+.nav-link:hover::before,
+.nav-link.active::before {
+  transform: translateY(-50%) scaleY(1);
+}
+.nav-link.active {
+  @apply bg-rice-50 text-rice-800 font-semibold;
+}
+.nav-link:hover:not(.active) {
+  @apply bg-rice-100 text-rice-900;
+  transform: translateX(2px);
+}
+.nav-link i {
+  @apply mr-3 text-lg transition-transform duration-200;
+  transition-timing-function: var(--ease-out-expo);
+}
+.nav-link:hover i {
+  transform: scale(1.1);
+}
+
+.stat-card {
+  @apply bg-white rounded-xl p-6 relative overflow-hidden shadow-md border border-rice-100 transition-all duration-300;
+  transition-timing-function: var(--ease-out-expo);
+}
+.stat-card:hover {
+  @apply shadow-lg;
+  transform: translateY(-4px);
+  border-color: var(--color-rice-200);
+}
+.stat-card::after {
+  content: "";
+  @apply absolute top-0 right-0 w-[120px] h-[120px] pointer-events-none;
+  background: radial-gradient(circle, var(--color-rice-100) 0%, transparent 70%);
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+.stat-card:hover::after {
+  opacity: 0.8;
+}
+.stat-icon {
+  @apply w-12 h-12 rounded-xl flex items-center justify-center;
+  background: linear-gradient(135deg, var(--color-rice-50) 0%, var(--color-rice-100) 100%);
+  box-shadow: 0 2px 8px -2px var(--color-rice-200);
+}
+.stat-icon i {
+  @apply text-xl;
+  color: var(--color-rice-700);
+}
+.stat-value {
+  @apply text-3xl font-bold mt-4;
+  background: linear-gradient(135deg, var(--color-rice-700) 0%, var(--color-rice-600) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-trend {
+  @apply text-sm mt-1 font-medium;
+  color: var(--color-rice-600);
+}
+
+.feature-card {
+  @apply bg-white rounded-xl p-6 shadow-md border border-rice-100 transition-all duration-300 relative overflow-hidden;
+  transition-timing-function: var(--ease-out-expo);
+}
+.feature-card::before {
+  content: "";
+  @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+  background: linear-gradient(135deg, transparent 0%, rgba(175, 153, 130, 0.03) 100%);
+}
+.feature-card:hover {
+  @apply shadow-lg;
+  transform: translateY(-6px);
+  border-color: var(--color-rice-200);
+}
+.feature-card:hover::before {
+  @apply opacity-100;
+}
+.feature-icon {
+  @apply w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0;
+  background: linear-gradient(135deg, var(--color-rice-50) 0%, var(--color-rice-100) 100%);
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.5), 0 2px 8px -2px var(--color-rice-200);
+}
+.feature-icon i {
+  color: var(--color-rice-700);
+}
+
+.btn-primary {
+  @apply py-2.5 px-6 rounded-lg font-medium text-white inline-flex items-center justify-center gap-2 transition-all duration-200 relative overflow-hidden border-0 cursor-pointer no-underline;
+  background: linear-gradient(135deg, var(--color-rice-600) 0%, var(--color-rice-700) 100%);
+  box-shadow: 0 4px 6px -1px rgba(147, 123, 102, 0.3), 0 2px 4px -2px rgba(147, 123, 102, 0.2);
+  transition-timing-function: var(--ease-out-expo);
+}
+.btn-primary::after {
+  content: "";
+  @apply absolute inset-0 opacity-0 transition-opacity duration-200;
+  background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.2) 100%);
+}
+.btn-primary:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 10px 15px -3px rgba(147, 123, 102, 0.3), 0 4px 6px -4px rgba(147, 123, 102, 0.2);
+}
+.btn-primary:hover::after {
+  @apply opacity-100;
+}
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary {
+  @apply py-2.5 px-6 rounded-lg font-medium inline-flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer no-underline bg-transparent;
+  border: 2px solid var(--color-rice-600);
+  color: var(--color-rice-700);
+  transition-timing-function: var(--ease-out-expo);
+}
+.btn-secondary:hover {
+  @apply text-white;
+  background: var(--color-rice-600);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px -2px rgba(147, 123, 102, 0.25);
+}
+
+.form-input {
+  @apply w-full py-2.5 px-4 rounded-lg border border-rice-200 outline-none transition-all duration-200 bg-white text-rice-800 text-sm;
+}
+.form-input:focus {
+  border-color: var(--color-rice-400);
+  box-shadow: 0 0 0 3px var(--color-rice-100);
+}
+.form-input::placeholder {
+  @apply text-rice-400;
+}
+
+.data-table {
+  @apply w-full border-collapse;
+}
+.data-table th {
+  @apply py-3 px-6 text-left text-xs font-semibold uppercase tracking-wider bg-rice-50 text-rice-500;
+  border-bottom: 2px solid var(--color-rice-200);
+}
+.data-table td {
+  @apply py-4 px-6 text-sm text-rice-700 transition-colors duration-150;
+  border-bottom: 1px solid var(--color-rice-100);
+}
+.data-table tbody tr:hover td {
+  @apply text-rice-900;
+  background: var(--color-rice-50);
+}
+
+.badge {
+  @apply inline-flex items-center py-0.5 px-2.5 rounded-full text-xs font-medium;
+}
+.badge-success {
+  background-color: var(--color-success-50);
+  color: var(--color-success-800);
+}
+.badge-warning {
+  background-color: var(--color-warning-50);
+  color: var(--color-warning-800);
+}
+.badge-danger {
+  background-color: var(--color-danger-50);
+  color: var(--color-danger-800);
+}
+
+.alert {
+  @apply p-4 rounded-xl border flex items-start gap-3;
+}
+.alert-success {
+  background-color: var(--color-success-50);
+  color: var(--color-success-800);
+  border-color: var(--color-success-200);
+}
+.alert-warning {
+  background-color: var(--color-warning-50);
+  color: var(--color-warning-800);
+  border-color: var(--color-warning-200);
+}
+.alert-danger {
+  background-color: var(--color-danger-50);
+  color: var(--color-danger-800);
+  border-color: var(--color-danger-200);
+}
+
+.card {
+  @apply bg-white rounded-xl overflow-hidden shadow-md border border-rice-100;
+}
+.card-header {
+  @apply py-4 px-6 border-b border-rice-100 flex items-center justify-between;
+}
+.card-body {
+  @apply p-6;
+}
+
+.user-card {
+  @apply flex items-center gap-3 p-4 rounded-xl;
+  background: linear-gradient(135deg, var(--color-rice-50) 0%, white 100%);
+  border: 1px solid var(--color-rice-100);
+}
+.user-avatar {
+  @apply w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm;
+  background: linear-gradient(135deg, var(--color-rice-200) 0%, var(--color-rice-300) 100%);
+  color: var(--color-rice-800);
+  box-shadow: 0 2px 4px -1px var(--color-rice-200);
+}
+
+.notification-btn {
+  @apply relative p-2 rounded-lg transition-all duration-200 text-rice-500 bg-transparent border-0 cursor-pointer;
+}
+.notification-btn:hover {
+  @apply bg-rice-100 text-rice-700;
+}
+.notification-dot {
+  @apply absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-white bg-danger-500;
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+.search-box {
+  @apply relative;
+}
+.search-box input {
+  @apply w-full py-2 pl-10 pr-4 rounded-lg border border-rice-200 text-sm outline-none transition-all duration-200 bg-rice-50;
+}
+.search-box input:focus {
+  @apply bg-white;
+  border-color: var(--color-rice-300);
+  box-shadow: 0 0 0 3px var(--color-rice-100);
+}
+.search-box i {
+  @apply absolute left-3 top-1/2 text-sm text-rice-400 pointer-events-none;
+  transform: translateY(-50%);
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, var(--color-rice-50) 0%, var(--color-rice-100) 50%, var(--color-rice-200) 100%);
+}
+.hero-pattern {
+  background-image: radial-gradient(var(--color-rice-200) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.logo-container {
+  @apply w-20 h-20 rounded-2xl flex items-center justify-center;
+  background: linear-gradient(135deg, var(--color-rice-600) 0%, var(--color-rice-700) 100%);
+  box-shadow: 0 10px 25px -5px rgba(147, 123, 102, 0.4), 0 8px 10px -6px rgba(147, 123, 102, 0.2);
+}
+
+.page-header {
+  @apply sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-rice-200;
+}
+
+.section-title {
+  @apply text-xs font-semibold uppercase tracking-widest mb-2 text-rice-400;
+}
+
+.toast {
+  @apply fixed bottom-4 right-4 py-3 px-4 rounded-xl shadow-lg flex items-center gap-3 z-50;
+  animation: slide-in-right 0.4s var(--ease-out-expo) forwards;
+  max-width: 400px;
+}
+.toast-success {
+  background-color: white;
+  color: var(--color-success-800);
+  border: 1px solid var(--color-success-200);
+  box-shadow: 0 10px 15px -3px rgba(90, 141, 75, 0.15);
+}
+.toast-error {
+  background-color: white;
+  color: var(--color-danger-800);
+  border: 1px solid var(--color-danger-200);
+  box-shadow: 0 10px 15px -3px rgba(196, 69, 54, 0.15);
+}
+
+.skeleton {
+  @apply rounded-lg;
+  background: linear-gradient(90deg, var(--color-rice-200) 25%, var(--color-rice-300) 50%, var(--color-rice-200) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+.spinner {
+  @apply w-5 h-5 rounded-full border-2 border-rice-200;
+  border-top-color: var(--color-rice-600);
+  animation: spin 0.8s linear infinite;
+}
+
+/* Utilities */
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s var(--ease-out-expo) forwards;
+}
+.animate-fade-in {
+  animation: fade-in 0.4s ease forwards;
+}
+.animate-slide-in-right {
+  animation: slide-in-right 0.5s var(--ease-out-expo) forwards;
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.4) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+.animate-rice-sway {
+  animation: rice-sway 3s ease-in-out infinite;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+
+.glass {
+  @apply bg-white/70 backdrop-blur-md border border-white/30;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-rice-700) 0%, var(--color-rice-500) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hover-lift {
+  @apply transition-all duration-300;
+  transition-timing-function: var(--ease-out-expo);
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  @apply shadow-lg;
+}
+
+.focus-ring:focus-visible {
+  @apply outline-none;
+  box-shadow: 0 0 0 3px var(--color-rice-200);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.bg-dots {
+  background-image: radial-gradient(circle, var(--color-rice-300) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.bg-grid {
+  background-image: linear-gradient(to right, var(--color-rice-200) 1px, transparent 1px), linear-gradient(to bottom, var(--color-rice-200) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Responsive Sidebar */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .sidebar-overlay {
+    @apply fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300;
+  }
+  .sidebar-overlay.open {
+    @apply opacity-100 pointer-events-auto;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+  }
+  .card, .stat-card {
+    box-shadow: none !important;
+    border: 1px solid var(--color-rice-200) !important;
+    break-inside: avoid;
+  }
+}
+
+/* Rice-themed animated elements */
+.rice-stalk {
+  display: inline-block;
+  animation: rice-sway 4s ease-in-out infinite;
+  opacity: 0.8;
+}
+.rice-stalk:nth-child(2) {
+  animation-delay: 1s;
+}
+.rice-stalk:nth-child(3) {
+  animation-delay: 2s;
+}
+
+/* Texture overlays */
+.texture-grain {
+  background-image:
+    radial-gradient(var(--color-rice-100) 1px, transparent 1px),
+    radial-gradient(var(--color-rice-100) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+  opacity: 0.1;
+}
+
+/* Custom fonts for rice milling theme */
+.font-rice {
+  font-family: 'Playfair Display', serif;
+}
+.font-rice-body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Dark mode support for rice theme */
+[data-theme="dark"] {
+  --color-rice-50: #2a1f18;
+  --color-rice-100: #33261f;
+  --color-rice-200: #403128;
+  --color-rice-300: #4e3b2f;
+  --color-rice-400: #644f40;
+  --color-rice-500: #7a6452;
+  --color-rice-600: #937b66;
+  --color-rice-700: #af9982;
+  --color-rice-800: #c4b2a0;
+  --color-rice-900: #ebe5d9;
+  --color-rice-950: #f5f2ee;
+
+  --color-husk: #c4b2a0;
+  --color-milled: #403128;
+  --color-bran: #c4b2a0;
+  --color-germ: #f5deb3;
+}

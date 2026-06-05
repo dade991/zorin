@@ -9,7 +9,7 @@ class FarmerController extends Controller
 {
     public function index()
     {
-        $farmers = Farmer::latest()->paginate(10);
+        $farmers = Farmer::latest()->paginate(15);
         return view('farmers.index', compact('farmers'));
     }
 
@@ -20,21 +20,25 @@ class FarmerController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name'    => 'required|string|max:255',
-            'phone'   => 'nullable|string|max:50',
-            'village' => 'nullable|string|max:255',
-            'address' => 'nullable|string',
+        $data = $request->validate([
+            'name'        => 'required|string|max:191',
+            'phone'       => 'nullable|string|max:30',
+            'village'     => 'nullable|string|max:100',
+            'state'       => 'nullable|string|max:100',
+            'id_number'   => 'nullable|string|max:60',
+            'notes'       => 'nullable|string|max:500',
         ]);
 
-        Farmer::create($request->all());
+        Farmer::create($data);
 
-        return redirect()->route('farmers.index')->with('success', 'Farmer added successfully.');
+        return redirect()->route('farmers.index')
+                         ->with('success', 'Farmer added successfully.');
     }
 
     public function show(Farmer $farmer)
     {
-        return view('farmers.show', compact('farmer'));
+        $purchases = $farmer->paddyPurchases()->latest()->take(10)->get();
+        return view('farmers.show', compact('farmer', 'purchases'));
     }
 
     public function edit(Farmer $farmer)
@@ -44,21 +48,25 @@ class FarmerController extends Controller
 
     public function update(Request $request, Farmer $farmer)
     {
-        $request->validate([
-            'name'    => 'required|string|max:255',
-            'phone'   => 'nullable|string|max:50',
-            'village' => 'nullable|string|max:255',
-            'address' => 'nullable|string',
+        $data = $request->validate([
+            'name'        => 'required|string|max:191',
+            'phone'       => 'nullable|string|max:30',
+            'village'     => 'nullable|string|max:100',
+            'state'       => 'nullable|string|max:100',
+            'id_number'   => 'nullable|string|max:60',
+            'notes'       => 'nullable|string|max:500',
         ]);
 
-        $farmer->update($request->all());
+        $farmer->update($data);
 
-        return redirect()->route('farmers.index')->with('success', 'Farmer updated successfully.');
+        return redirect()->route('farmers.index')
+                         ->with('success', 'Farmer updated successfully.');
     }
 
     public function destroy(Farmer $farmer)
     {
         $farmer->delete();
-        return redirect()->route('farmers.index')->with('success', 'Farmer deleted successfully.');
+        return redirect()->route('farmers.index')
+                         ->with('success', 'Farmer deleted.');
     }
 }

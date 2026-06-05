@@ -1,74 +1,83 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="forest">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="forest">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In — Zorin</title>
+    <title>Sign In — Zorin Rice Milling</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body>
-<script>
-    const t = localStorage.getItem('zorin-theme') || 'forest';
-    document.documentElement.setAttribute('data-theme', t);
-</script>
+<body class="antialiased">
 
 <div class="auth-page">
-    {{-- LEFT VISUAL --}}
+
+    <!-- ── Visual Side ── -->
     <div class="auth-visual">
-        <img src="https://images.unsplash.com/photo-1536054348319-58a5ea05f4de?w=900&q=80" alt="Rice field">
+        <img src="/images/operations/paddy-fields.jpg" alt="Paddy fields">
         <div class="auth-visual-content">
-            <a href="/" class="auth-logo">ZORIN<span>.</span></a>
+            <div class="auth-logo">ZOR<span>IN</span></div>
             <div>
-                <h2 class="auth-tagline">Welcome<br>back to<br><em>Zorin</em></h2>
-                <p class="auth-tagline-sub">Your rice milling operations are running smoothly. Sign in to check your dashboard.</p>
+                <h2 class="auth-tagline">Harvest the Power of <em>Smart</em> Milling</h2>
+                <p class="auth-tagline-sub">
+                    Manage your entire rice mill operation — from paddy procurement
+                    to final sale — in one intelligent platform.
+                </p>
             </div>
         </div>
     </div>
 
-    {{-- RIGHT FORM --}}
+    <!-- ── Form Side ── -->
     <div class="auth-form-side">
         <div class="auth-form-wrap">
-            <a href="/" class="auth-back">← Back to Home</a>
 
-            <div class="auth-form-title">Sign In</div>
-            <p class="auth-form-sub">Enter your credentials to access your Zorin dashboard.</p>
+            <a href="{{ route('home') }}" class="auth-back">
+                <i class="fas fa-arrow-left"></i> Back to home
+            </a>
 
-            {{-- Session Status --}}
+            <h1 class="auth-form-title">Welcome back</h1>
+            <p class="auth-form-sub">Sign in to your Zorin account to continue.</p>
+
             @if (session('status'))
-                <div style="background:var(--primary-pale);color:var(--primary);padding:0.85rem 1rem;border-radius:var(--radius-sm);font-size:0.85rem;font-weight:500;margin-bottom:1.25rem;border:1px solid var(--primary-light);">
+                <div class="alert alert-success" style="margin-bottom:1.5rem;">
+                    <i class="fas fa-check-circle"></i>
                     {{ session('status') }}
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('login') }}">
+            <form action="{{ route('login') }}" method="POST" style="display:flex;flex-direction:column;gap:1rem;">
                 @csrf
 
-                {{-- Email --}}
-                <div class="auth-input-group">
-                    <label class="auth-label" for="email">Email Address</label>
-                    <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
-                        class="auth-input @error('email') is-invalid @enderror"
-                        placeholder="you@yourmill.com">
+                <div>
+                    <label for="email" class="auth-label">Email Address</label>
+                    <input id="email" name="email" type="email" required autocomplete="email"
+                           class="auth-input {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                           value="{{ old('email') }}"
+                           placeholder="you@yourmill.com">
                     @error('email')
-                        <div class="auth-error">{{ $message }}</div>
+                        <span class="auth-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</span>
                     @enderror
                 </div>
 
-                {{-- Password --}}
-                <div class="auth-input-group">
-                    <label class="auth-label" for="password">Password</label>
-                    <input id="password" type="password" name="password" required autocomplete="current-password"
-                        class="auth-input @error('password') is-invalid @enderror"
-                        placeholder="••••••••">
+                <div>
+                    <label for="password" class="auth-label">Password</label>
+                    <div style="position:relative;">
+                        <input id="password" name="password" type="password" required autocomplete="current-password"
+                               class="auth-input {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                               placeholder="••••••••">
+                        <button type="button" id="toggle-pass"
+                                style="position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:0.95rem;">
+                            <i class="fas fa-eye" id="pass-icon"></i>
+                        </button>
+                    </div>
                     @error('password')
-                        <div class="auth-error">{{ $message }}</div>
+                        <span class="auth-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</span>
                     @enderror
                 </div>
 
-                {{-- Remember + Forgot --}}
                 <div class="remember-row">
                     <label>
-                        <input type="checkbox" name="remember" style="accent-color:var(--primary);">
+                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}
+                               style="accent-color:var(--primary);">
                         Remember me
                     </label>
                     @if (Route::has('password.request'))
@@ -76,17 +85,35 @@
                     @endif
                 </div>
 
-                <button type="submit" class="auth-submit">SIGN IN →</button>
+                <button type="submit" class="auth-submit">
+                    Sign In <i class="fas fa-arrow-right" style="margin-left:0.5rem;"></i>
+                </button>
             </form>
 
             <div class="auth-divider">or</div>
 
-            <div class="auth-switch">
+            <p class="auth-switch">
                 Don't have an account?
-                <a href="{{ route('register') }}">Create one free →</a>
-            </div>
+                <a href="{{ route('register') }}">Create one free</a>
+            </p>
+
         </div>
     </div>
 </div>
+
+<script>
+document.getElementById('toggle-pass')?.addEventListener('click', function () {
+    const input = document.getElementById('password');
+    const icon  = document.getElementById('pass-icon');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+    } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye';
+    }
+});
+</script>
+
 </body>
 </html>
