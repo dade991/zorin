@@ -29,41 +29,43 @@
     </div>
 </div>
 
-<!-- ═══════════ NAV ═══════════ -->
-<nav class="w-nav" id="w-nav">
-    <a href="{{ route('home') }}" class="w-nav-logo">ZOR<span>IN</span></a>
+<!-- ═══════════ NAVIGATION ═══════════ -->
+<<nav class="w-nav" id="w-nav">
+    <div class="w-nav-inner">
+        <a href="{{ route('home') }}" class="w-nav-logo" aria-label="Zorin Home">ZOR<span>IN</span></a>
 
-    <ul class="w-nav-menu" id="w-nav-menu">
-        <li><a href="#about">About</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#process">Process</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#testimonials">Testimonials</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        @auth
-            <li><a href="{{ route('dashboard') }}" class="w-nav-cta">Dashboard</a></li>
-        @else
-            <li><a href="{{ route('login') }}">Sign In</a></li>
-            <li><a href="{{ route('register') }}" class="w-nav-cta">Get Started</a></li>
-        @endauth
-    </ul>
+        <ul class="w-nav-menu" id="w-nav-menu" role="menubar">
+            <li role="none"><a href="#about" role="menuitem">About</a></li>
+            <li role="none"><a href="#features" role="menuitem">Features</a></li>
+            <li role="none"><a href="#process" role="menuitem">Process</a></li>
+            <li role="none"><a href="#gallery" role="menuitem">Gallery</a></li>
+            <li role="none"><a href="#testimonials" role="menuitem">Testimonials</a></li>
+            <li role="none"><a href="#faq" role="menuitem">FAQ</a></li>
+            @auth
+                <li role="none"><a href="{{ route('dashboard') }}" class="w-nav-cta">Dashboard</a></li>
+            @else
+                <li role="none"><a href="{{ route('login') }}">Sign In</a></li>
+                <li role="none"><a href="{{ route('register') }}" class="w-nav-cta">Get Started</a></li>
+            @endauth
+        </ul>
 
-    <button class="w-nav-toggle" id="w-nav-toggle" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-    </button>
+        <button class="w-nav-toggle" id="w-nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="w-nav-menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
 </nav>
 
 <!-- ═══════════ HERO ═══════════ -->
 <section class="w-hero">
     <div class="w-hero-image-wrap">
-        <img src="/images/operations/paddy-fields.jpg" alt="Paddy fields at dawn">
+        <img src="/images/operations/paddy-fields.jpg" alt="Paddy fields at dawn" fetchpriority="high">
     </div>
     <div class="w-hero-overlay"></div>
 
     <div class="w-hero-content">
         <div class="w-hero-inner">
             <div class="w-hero-badge">
-                <span class="w-badge-dot"></span>
+                <span class="w-badge-dot" aria-hidden="true"></span>
                 ISO 9001:2015 Certified
             </div>
             <h1>Premium <em>Rice</em>,<br>Milled with Precision</h1>
@@ -89,10 +91,16 @@
     </div>
 
     <!-- Floating photo grid -->
-    <div class="w-hero-photos">
-        <div class="w-hero-photo"><img src="/images/operations/rice-harvest.jpg" alt="Rice harvest"></div>
-        <div class="w-hero-photo"><img src="/images/operations/quality-rice.jpg" alt="Quality rice"></div>
-        <div class="w-hero-photo"><img src="/images/operations/mill-operations.jpg" alt="Mill operations"></div>
+    <div class="w-hero-photos" aria-hidden="true">
+        <div class="w-hero-photo">
+            <img src="/images/operations/rice-harvest.jpg" alt="Rice harvest" loading="lazy" decoding="async">
+        </div>
+        <div class="w-hero-photo">
+            <img src="/images/operations/quality-rice.jpg" alt="Quality rice" loading="lazy" decoding="async">
+        </div>
+        <div class="w-hero-photo">
+            <img src="/images/operations/mill-operations.jpg" alt="Mill operations" loading="lazy" decoding="async">
+        </div>
     </div>
 </section>
 
@@ -121,21 +129,23 @@
 
 <!-- ═══════════ STATS BAND ═══════════ -->
 <div class="w-stats-band" id="stats-band">
-    <div class="w-stat-item">
-        <span class="w-stat-number" data-target="1200">0</span>
-        <span class="w-stat-label">Farmers Registered</span>
-    </div>
-    <div class="w-stat-item">
-        <span class="w-stat-number" data-target="48000" data-suffix=" MT">0</span>
-        <span class="w-stat-label">Paddy Processed Annually</span>
-    </div>
-    <div class="w-stat-item">
-        <span class="w-stat-number" data-target="99" data-suffix="%">0</span>
-        <span class="w-stat-label">Milling Efficiency</span>
-    </div>
-    <div class="w-stat-item">
-        <span class="w-stat-number" data-target="14">0</span>
-        <span class="w-stat-label">Years of Excellence</span>
+    <div class="w-stats-inner">
+        <div class="w-stat-item">
+            <span class="w-stat-number" data-target="1200">0</span>
+            <span class="w-stat-label">Farmers Registered</span>
+        </div>
+        <div class="w-stat-item">
+            <span class="w-stat-number" data-target="48000" data-suffix=" MT">0</span>
+            <span class="w-stat-label">Paddy Processed Annually</span>
+        </div>
+        <div class="w-stat-item">
+            <span class="w-stat-number" data-target="99" data-suffix="%">0</span>
+            <span class="w-stat-label">Milling Efficiency</span>
+        </div>
+        <div class="w-stat-item">
+            <span class="w-stat-number" data-target="14">0</span>
+            <span class="w-stat-label">Years of Excellence</span>
+        </div>
     </div>
 </div>
 
@@ -144,14 +154,14 @@
     <div class="w-about-inner">
         <div class="w-about-images" data-animate="from-left">
             <div class="w-about-img">
-                <img src="/images/operations/farmer-field.jpg" alt="Farmer in field">
+                <img src="/images/operations/farmer-field.jpg" alt="Farmer in field" loading="lazy" decoding="async">
                 <div class="w-img-badge">📍 Kano State, NG</div>
             </div>
             <div class="w-about-img">
-                <img src="/images/operations/milling-process.jpg" alt="Milling process">
+                <img src="/images/operations/milling-process.jpg" alt="Milling process" loading="lazy" decoding="async">
             </div>
             <div class="w-about-img">
-                <img src="/images/operations/rice-grains.jpg" alt="Quality rice grains">
+                <img src="/images/operations/rice-grains.jpg" alt="Quality rice grains" loading="lazy" decoding="async">
                 <div class="w-img-badge">✓ Grade A Certified</div>
             </div>
         </div>
@@ -184,32 +194,32 @@
     </div>
     <div class="w-features-grid stagger" id="features-grid">
         <div class="w-feature-card" data-animate="up">
-            <div class="w-feature-icon"><i class="fas fa-user-tie" style="color:var(--primary)"></i></div>
+            <div class="w-feature-icon"><i class="fas fa-user-tie"></i></div>
             <div class="w-feature-title">Farmer Management</div>
             <p class="w-feature-body">Maintain detailed farmer profiles, track purchase history, and manage relationships with NIN/BVN integration.</p>
         </div>
         <div class="w-feature-card" data-animate="up">
-            <div class="w-feature-icon"><i class="fas fa-shopping-basket" style="color:var(--primary)"></i></div>
+            <div class="w-feature-icon"><i class="fas fa-shopping-basket"></i></div>
             <div class="w-feature-title">Paddy Purchases</div>
             <p class="w-feature-body">Record purchases with automatic weight, moisture and quality calculations. Real-time farmer credit ledger.</p>
         </div>
         <div class="w-feature-card" data-animate="up">
-            <div class="w-feature-icon"><i class="fas fa-industry" style="color:var(--primary)"></i></div>
+            <div class="w-feature-icon"><i class="fas fa-industry"></i></div>
             <div class="w-feature-title">Milling Batches</div>
             <p class="w-feature-body">Log every batch with input weight, output yield, husk and bran by-products. Track efficiency per machine.</p>
         </div>
         <div class="w-feature-card" data-animate="up">
-            <div class="w-feature-icon"><i class="fas fa-boxes-stacked" style="color:var(--primary)"></i></div>
+            <div class="w-feature-icon"><i class="fas fa-boxes-stacked"></i></div>
             <div class="w-feature-title">Inventory Control</div>
             <p class="w-feature-body">Monitor stock levels across all varieties and grades. Smart low-stock alerts and expiry tracking.</p>
         </div>
         <div class="w-feature-card" data-animate="up">
-            <div class="w-feature-icon"><i class="fas fa-receipt" style="color:var(--primary)"></i></div>
+            <div class="w-feature-icon"><i class="fas fa-receipt"></i></div>
             <div class="w-feature-title">Sales & Invoicing</div>
             <p class="w-feature-body">Create branded invoices, track payments, manage bulk orders and export to PDF in one click.</p>
         </div>
         <div class="w-feature-card" data-animate="up">
-            <div class="w-feature-icon"><i class="fas fa-chart-pie" style="color:var(--primary)"></i></div>
+            <div class="w-feature-icon"><i class="fas fa-chart-pie"></i></div>
             <div class="w-feature-title">Reports & Analytics</div>
             <p class="w-feature-body">Profit & loss, efficiency ratios, seasonal trends — exportable reports for data-driven decisions.</p>
         </div>
@@ -225,23 +235,23 @@
     </div>
     <div class="w-gallery-grid">
         <div class="w-gallery-item">
-            <img src="/images/operations/farmer-collection.jpg" alt="Farmer collection point">
+            <img src="/images/operations/farmer-collection.jpg" alt="Farmer collection point" loading="lazy" decoding="async">
             <div class="w-gallery-overlay"><span class="w-gallery-label">Paddy Collection</span></div>
         </div>
         <div class="w-gallery-item">
-            <img src="/images/operations/harvest-season.jpg" alt="Harvest season">
+            <img src="/images/operations/harvest-season.jpg" alt="Harvest season" loading="lazy" decoding="async">
             <div class="w-gallery-overlay"><span class="w-gallery-label">Harvest Season</span></div>
         </div>
         <div class="w-gallery-item">
-            <img src="/images/operations/milling-process.jpg" alt="Milling process">
+            <img src="/images/operations/milling-process.jpg" alt="Milling process" loading="lazy" decoding="async">
             <div class="w-gallery-overlay"><span class="w-gallery-label">Milling Operations</span></div>
         </div>
         <div class="w-gallery-item">
-            <img src="/images/operations/quality-rice.jpg" alt="Quality rice">
+            <img src="/images/operations/quality-rice.jpg" alt="Quality rice" loading="lazy" decoding="async">
             <div class="w-gallery-overlay"><span class="w-gallery-label">Quality Rice</span></div>
         </div>
         <div class="w-gallery-item">
-            <img src="/images/operations/rice-grains-closeup.jpg" alt="Rice grains closeup">
+            <img src="/images/operations/rice-grains-closeup.jpg" alt="Rice grains closeup" loading="lazy" decoding="async">
             <div class="w-gallery-overlay"><span class="w-gallery-label">Grade A Grains</span></div>
         </div>
     </div>
@@ -335,35 +345,35 @@
     </div>
     <div class="w-faq-list" id="faq-list">
         <div class="w-faq-item">
-            <button class="w-faq-trigger">
+            <button class="w-faq-trigger" aria-expanded="false">
                 How many farmers can I register?
                 <span class="w-faq-icon"><i class="fas fa-plus"></i></span>
             </button>
             <div class="w-faq-body"><p>There is no limit on farmer registrations. The platform is designed to handle thousands of farmer records with full purchase history and documentation.</p></div>
         </div>
         <div class="w-faq-item">
-            <button class="w-faq-trigger">
+            <button class="w-faq-trigger" aria-expanded="false">
                 Can I export reports to PDF or Excel?
                 <span class="w-faq-icon"><i class="fas fa-plus"></i></span>
             </button>
             <div class="w-faq-body"><p>Yes. All reports — purchases, sales, milling efficiency, profit & loss — can be exported as PDF or Excel. Invoices are print-ready with your branding.</p></div>
         </div>
         <div class="w-faq-item">
-            <button class="w-faq-trigger">
+            <button class="w-faq-trigger" aria-expanded="false">
                 Does it work on mobile devices?
                 <span class="w-faq-icon"><i class="fas fa-plus"></i></span>
             </button>
             <div class="w-faq-body"><p>Zorin is fully responsive and works on smartphones, tablets and desktops. Field staff can record paddy purchases on mobile at the collection point.</p></div>
         </div>
         <div class="w-faq-item">
-            <button class="w-faq-trigger">
+            <button class="w-faq-trigger" aria-expanded="false">
                 Is the data backed up automatically?
                 <span class="w-faq-icon"><i class="fas fa-plus"></i></span>
             </button>
             <div class="w-faq-body"><p>All data is backed up daily to secure cloud storage. We maintain 30 days of rolling backups so your data is always safe and recoverable.</p></div>
         </div>
         <div class="w-faq-item">
-            <button class="w-faq-trigger">
+            <button class="w-faq-trigger" aria-expanded="false">
                 How long does setup take?
                 <span class="w-faq-icon"><i class="fas fa-plus"></i></span>
             </button>
@@ -375,7 +385,7 @@
 <!-- ═══════════ CTA ═══════════ -->
 <section class="w-cta">
     <div class="w-cta-inner">
-        <span class="w-section-tag" style="color:rgba(255,255,255,0.5)">Get Started Today</span>
+        <span class="w-section-tag">Get Started Today</span>
         <h2>Ready to Modernise<br>Your Mill?</h2>
         <p>Join over 40 rice mills across Northern Nigeria who trust Zorin to run their operations efficiently.</p>
         <div class="w-cta-btns">
@@ -396,36 +406,34 @@
 </section>
 
 <!-- ═══════════ FOOTER ═══════════ -->
-<footer class="w-footer">
-    <div style="max-width:1280px;margin:0 auto;">
-        <div class="w-footer-top">
-            <div class="w-footer-brand">
-                <div class="w-footer-logo">ZOR<span>IN</span></div>
-                <p>Premium rice milling management for Nigerian agro-processors. From paddy to polished grain — managed with precision.</p>
-            </div>
-            <div class="w-footer-col">
-                <h4>Platform</h4>
-                <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#process">How It Works</a></li>
-                    <li><a href="{{ route('register') }}">Get Started</a></li>
-                    <li><a href="{{ route('login') }}">Sign In</a></li>
-                </ul>
-            </div>
-            <div class="w-footer-col">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
+<<footer class="w-footer">
+    <div class="w-footer-top">
+        <div class="w-footer-brand">
+            <div class="w-footer-logo">ZOR<span>IN</span></div>
+            <p>Premium rice milling management for Nigerian agro-processors. From paddy to polished grain — managed with precision.</p>
         </div>
-        <div class="w-footer-bottom">
-            <span>© {{ date('Y') }} Zorin Rice Milling. All rights reserved.</span>
-            <span>Made with <i class="fas fa-heart" style="color:var(--gold-light)"></i> in Kano, Nigeria</span>
+        <div class="w-footer-col">
+            <h4>Platform</h4>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#process">How It Works</a></li>
+                <li><a href="{{ route('register') }}">Get Started</a></li>
+                <li><a href="{{ route('login') }}">Sign In</a></li>
+            </ul>
         </div>
+        <div class="w-footer-col">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="w-footer-bottom">
+        <span>© {{ date('Y') }} Zorin Rice Milling. All rights reserved.</span>
+        <span>Made with <i class="fas fa-heart" style="color:var(--gold-light)"></i> in Kano, Nigeria</span>
     </div>
 </footer>
 
@@ -434,7 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Loader
     const loader = document.getElementById('zorin-loader');
-    setTimeout(() => loader && loader.classList.add('hidden'), 1800);
+    setTimeout(() => loader?.classList.add('hidden'), 1800);
 
     // ── Nav scroll state
     const nav = document.getElementById('w-nav');
@@ -446,12 +454,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggle = document.getElementById('w-nav-toggle');
     const menu   = document.getElementById('w-nav-menu');
     toggle?.addEventListener('click', () => {
+        const isOpen = menu.classList.toggle('open');
         toggle.classList.toggle('open');
-        menu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', isOpen);
     });
     menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
         toggle.classList.remove('open');
         menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
     }));
 
     // ── Intersection Observer for scroll animations
@@ -504,8 +514,16 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const item = btn.closest('.w-faq-item');
             const isOpen = item.classList.contains('open');
-            document.querySelectorAll('.w-faq-item').forEach(i => i.classList.remove('open'));
-            if (!isOpen) item.classList.add('open');
+            // Close all
+            document.querySelectorAll('.w-faq-item').forEach(i => {
+                i.classList.remove('open');
+                i.querySelector('.w-faq-trigger')?.setAttribute('aria-expanded', 'false');
+            });
+            // Open clicked if it was closed
+            if (!isOpen) {
+                item.classList.add('open');
+                btn.setAttribute('aria-expanded', 'true');
+            }
         });
     });
 

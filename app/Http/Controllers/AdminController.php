@@ -15,29 +15,25 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('checkadmin'); // Assuming we register the middleware as 'checkadmin'
     }
 
     public function index()
     {
-        // Admin-specific stats
         $stats = [
             'farmers'       => Farmer::count(),
             'purchases'     => PaddyPurchase::count(),
             'milling'       => MillingBatch::count(),
-            'sales_total'   => Sale::sum('total_amount'),
+            'sales_total'   => Sale::sum('total_amount') ?? 0,
             'customers'     => Customer::count(),
             'pending_sales' => Sale::where('status', 'pending')->count(),
             'users'         => User::count(),
-            'admins'        => User::where('is_admin', true)->count(),
         ];
 
-        $recentFarmers  = Farmer::latest()->take(5)->get();
-        $recentSales    = Sale::with('customer')->latest()->take(5)->get();
-        $recentBatches  = MillingBatch::latest()->take(5)->get();
-        $recentUsers    = User::latest()->take(5)->get();
+        $recentFarmers = Farmer::latest()->take(5)->get();
+        $recentSales   = Sale::with('customer')->latest()->take(5)->get();
+        $recentBatches = MillingBatch::latest()->take(5)->get();
+        $recentUsers   = User::latest()->take(5)->get();
 
-        // Monthly revenue for chart (last 6 months)
         $monthlyRevenue = [];
         for ($i = 5; $i >= 0; $i--) {
             $month = now()->subMonths($i);
@@ -45,7 +41,7 @@ class AdminController extends Controller
                 'month'  => $month->format('M'),
                 'amount' => Sale::whereYear('created_at', $month->year)
                                 ->whereMonth('created_at', $month->month)
-                                ->sum('total_amount'),
+                                ->sum('total_amount') ?? 0,
             ];
         }
 

@@ -11,7 +11,7 @@
 
 <div class="auth-page">
     <div class="auth-visual">
-        <img src="/images/operations/paddy-fields.jpg" alt="Paddy fields" fetchpriority="high">
+        <img src="/images/operations/paddy-fields.jpg" alt="Paddy fields">
         <div class="auth-visual-content">
             <div class="auth-logo">ZOR<span>IN</span></div>
             <div>
@@ -30,31 +30,30 @@
             <p class="auth-form-sub">Sign in to book milling services or check your status.</p>
 
             @if (session('status'))
-                <div class="alert alert-success" role="alert">
+                <div class="alert alert-success" style="margin-bottom:1.5rem;">
                     <i class="fas fa-check-circle"></i> {{ session('status') }}
                 </div>
             @endif
 
-            <form action="{{ route('login') }}" method="POST" class="form-stack">
+            <form action="{{ route('login') }}" method="POST" style="display:flex;flex-direction:column;gap:1rem;">
                 @csrf
                 <div>
                     <label for="email" class="auth-label">Email Address</label>
                     <input id="email" name="email" type="email" required autocomplete="email"
-                           class="auth-input @error('email') is-invalid @enderror"
-                           value="{{ old('email') }}" placeholder="you@email.com"
-                           aria-invalid="{{ $errors->has('email') ? 'true' : 'false' }}">
+                           class="auth-input {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                           value="{{ old('email') }}" placeholder="you@email.com">
                     @error('email')
                         <span class="auth-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</span>
                     @enderror
                 </div>
                 <div>
                     <label for="password" class="auth-label">Password</label>
-                    <div class="password-wrap">
+                    <div style="position:relative;">
                         <input id="password" name="password" type="password" required autocomplete="current-password"
-                               class="auth-input @error('password') is-invalid @enderror"
-                               placeholder="••••••••"
-                               aria-invalid="{{ $errors->has('password') ? 'true' : 'false' }}">
-                        <button type="button" class="password-toggle" onclick="togglePass()" aria-label="Toggle password visibility">
+                               class="auth-input {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                               placeholder="••••••••">
+                        <button type="button" onclick="togglePass()" 
+                                style="position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:0.95rem;">
                             <i class="fas fa-eye" id="pass-icon"></i>
                         </button>
                     </div>
@@ -64,7 +63,7 @@
                 </div>
                 <div class="remember-row">
                     <label>
-                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }} style="accent-color:var(--primary);">
                         Remember me
                     </label>
                     @if (Route::has('password.request'))
@@ -84,33 +83,12 @@
     </div>
 </div>
 
-<style>
-.password-wrap { position: relative; }
-.password-toggle {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    padding: 0.25rem;
-}
-</style>
-
 <script>
 function togglePass() {
     const input = document.getElementById('password');
     const icon = document.getElementById('pass-icon');
-    if (input.type === 'password') { 
-        input.type = 'text'; 
-        icon.className = 'fas fa-eye-slash'; 
-    } else { 
-        input.type = 'password'; 
-        icon.className = 'fas fa-eye'; 
-    }
+    if (input.type === 'password') { input.type = 'text'; icon.className = 'fas fa-eye-slash'; }
+    else { input.type = 'password'; icon.className = 'fas fa-eye'; }
 }
 </script>
 </body>

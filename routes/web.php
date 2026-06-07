@@ -1,54 +1,57 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FarmerController;
-use App\Http\Controllers\PaddyPurchaseController;
-use App\Http\Controllers\MillingBatchController;
-use App\Http\Controllers\InventoryController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\SaleController;
-use App\Http\Controllers\ReportController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\BookingController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
 
-// ── Public Landing Page ──
+// Public
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-// ── Authenticated Routes ──
+// Auth routes (Laravel Breeze/Fortify)
+require __DIR__.'/auth.php';
+
+// Authenticated routes
 Route::middleware(['auth', 'verified'])->group(function () {
+
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Resource routes
-    Route::resource('farmers', FarmerController::class);
-    Route::resource('paddy-purchases', PaddyPurchaseController::class);
-    Route::resource('milling-batches', MillingBatchController::class);
-    Route::resource('inventory', InventoryController::class);
-    Route::resource('sales', SaleController::class);
-    Route::resource('reports', ReportController::class);
-    Route::resource('customers', CustomerController::class);
+    // Settings (was /profile)
+    Route::get('/settings', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/settings', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/settings', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Profile routes
-    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Notifications
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
 
-    // Logout handled by Breeze — included via auth routes below
-    Route::post('/logout', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])
-        ->name('logout');
+    // Chat
+    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+    Route::post('/chat/send', [ChatController::class, 'send'])->name('chat.send');
+
+    // Bookings
+    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+    Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
+    Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+
+    // Admin-only routes
+    Route::middleware(['admin'])->prefix('admin')->group(function () {
+        Route::get('/sales', function () { return view('admin.sales'); })->name('admin.sales');
+        Route::get('/customers', function () { return view('admin.customers'); })->name('admin.customers');
+        Route::get('/bookings', function () { return view('admin.bookings'); })->name('admin.bookings');
+        Route::get('/machines', function () { return view('admin.machines'); })->name('admin.machines');
+        Route::get('/notifications', function () { return view('admin.notifications'); })->name('admin.notifications');
+    });
 });
-
-// ── Breeze Auth Routes ──
-require __DIR__.'/auth.php';
