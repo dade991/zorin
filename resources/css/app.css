@@ -507,6 +507,43 @@ a {
   }
 }
 
+/* ── Navbar Inner (ADD THIS - was missing!) ── */
+.w-nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── Stats Band Inner (ADD THIS - was missing!) ── */
+.w-stats-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 1023px) {
+  .w-stats-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .w-stats-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .w-stat-number {
+    font-size: 1.75rem;
+  }
+}
+
 /* ============================================
    DASHBOARD LAYOUT
    ============================================ */

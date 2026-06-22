@@ -30,7 +30,7 @@
 </div>
 
 <!-- ═══════════ NAVIGATION ═══════════ -->
-<<nav class="w-nav" id="w-nav">
+<nav class="w-nav" id="w-nav">
     <div class="w-nav-inner">
         <a href="{{ route('home') }}" class="w-nav-logo" aria-label="Zorin Home">ZOR<span>IN</span></a>
 
@@ -406,7 +406,7 @@
 </section>
 
 <!-- ═══════════ FOOTER ═══════════ -->
-<<footer class="w-footer">
+<footer class="w-footer">
     <div class="w-footer-top">
         <div class="w-footer-brand">
             <div class="w-footer-logo">ZOR<span>IN</span></div>
